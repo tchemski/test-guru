@@ -1,5 +1,5 @@
-class TestGuru
-  def version
-    '0.0.1'
+module TestGuru
+  def self.version
+    '0.1.0'
   end
 end
