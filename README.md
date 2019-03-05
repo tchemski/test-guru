@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Question
+Test
+Users
+Admin
+Cours
+TestsManager
