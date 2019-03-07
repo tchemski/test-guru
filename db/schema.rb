@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2019_03_07_121738) do
 
   create_table "answers", force: :cascade do |t|
     t.text "body"
-    t.boolean "correct"
+    t.boolean "correct", default: false
     t.integer "question_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(version: 2019_03_07_121738) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "questions", force: :cascade do |t|
-    t.text "body"
+    t.text "body", null: false
     t.integer "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2019_03_07_121738) do
   end
 
   create_table "tests", force: :cascade do |t|
-    t.string "title"
-    t.integer "level"
+    t.string "title", null: false
+    t.integer "level", default: 0
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -48,9 +48,9 @@ ActiveRecord::Schema.define(version: 2019_03_07_121738) do
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 50
-    t.string "email", limit: 60
-    t.string "password"
-    t.integer "level"
+    t.string "email", limit: 50
+    t.string "password", null: false
+    t.integer "level", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
