@@ -7,34 +7,34 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 category = Category.create!(title: 'Веб-дизайн')
-test = category.test.create!(title: 'HTML')
-question = test.question.create!(body: 'Что такое тэг?')
-question.answer.create!(body: 'команда')
-question.answer.create!(body: 'элемент', correct: true)
-question.answer.create!(body: 'метка', correct: true)
-question = test.question.create!(body: 'Какой тэг используется для создания ссылок?')
-question.answer.create!(body: '<a>', correct: true)
-question.answer.create!(body: '<b>')
-question.answer.create!(body: '<i>')
+test = category.tests.create!(title: 'HTML')
+question = test.questions.create!(body: 'Что такое тэг?')
+question.answers.create!(body: 'команда')
+question.answers.create!(body: 'элемент', correct: true)
+question.answers.create!(body: 'метка', correct: true)
+question = test.questions.create!(body: 'Какой тэг используется для создания ссылок?')
+question.answers.create!(body: '<a>', correct: true)
+question.answers.create!(body: '<b>')
+question.answers.create!(body: '<i>')
 
 category = Category.create!(title: 'Веб-программирование')
 %w[Ruby Rails JavaScript Java PHP Python].each do |l|
-  test = category.test.create!(title: l, level: rand(0..3))
+  test = category.tests.create!(title: l, level: rand(0..3))
   rand(6..10).times do |q|
-    question = test.question.create!(body: "Вопрос #{l} #{q}?")
+    question = test.questions.create!(body: "Вопрос #{l} #{q}?")
     rand(2..5).times do |a|
-      question.answer.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
+      question.answers.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
     end
   end
 end
 
 category = Category.create!(title: 'Программирование')
 %w[C++ Ada Fortran Perl Assembler Pascal Delphi COBOL].each do |l|
-  test = category.test.create!(title: l, level: rand(0..3))
+  test = category.tests.create!(title: l, level: rand(0..3))
   rand(6..10).times do |q|
-    question = test.question.create!(body: "Вопрос #{l} #{q}?")
+    question = test.questions.create!(body: "Вопрос #{l} #{q}?")
     rand(2..5).times do |a|
-      question.answer.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
+      question.answers.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
     end
   end
 end
