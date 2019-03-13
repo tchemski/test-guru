@@ -5,3 +5,59 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+category = Category.create!(title: 'Веб-дизайн')
+test = category.test.create!(title: 'HTML')
+question = test.question.create!(body: 'Что такое тэг?')
+question.answer.create!(body: 'команда')
+question.answer.create!(body: 'элемент', correct: true)
+question.answer.create!(body: 'метка', correct: true)
+question = test.question.create!(body: 'Какой тэг используется для создания ссылок?')
+question.answer.create!(body: '<a>', correct: true)
+question.answer.create!(body: '<b>')
+question.answer.create!(body: '<i>')
+
+category = Category.create!(title: 'Веб-программирование')
+%w[Ruby Rails JavaScript Java PHP Python].each do |l|
+  test = category.test.create!(title: l, level: rand(0..3))
+  rand(6..10).times do |q|
+    question = test.question.create!(body: "Вопрос #{l} #{q}?")
+    rand(2..5).times do |a|
+      question.answer.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
+    end
+  end
+end
+
+category = Category.create!(title: 'Программирование')
+%w[C++ Ada Fortran Perl Assembler Pascal Delphi COBOL].each do |l|
+  test = category.test.create!(title: l, level: rand(0..3))
+  rand(6..10).times do |q|
+    question = test.question.create!(body: "Вопрос #{l} #{q}?")
+    rand(2..5).times do |a|
+      question.answer.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
+    end
+  end
+end
+
+%w[lorem ipsum dolor sit amet consectetur adipiscing elit sed eiusmod tempor]\
+  .each do |username|
+    User.create!(
+      name: username.capitalize,
+      email: "#{username}@mail.org",
+      password: '12345',
+      level: 0
+    )
+  end
+
+User.find_each do |user|
+  rand(10).times do
+    test = Test.where('level<=?', user.level).sample
+    tu = TestsUser.create!(
+      test_id: test.id,
+      user_id: user.id,
+      passed: [true, false].sample
+    )
+    user.level += 1 if tu.passed
+    user.save
+  end
+end
