@@ -5,9 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+%w[lorem ipsum dolor sit amet consectetur adipiscing elit sed eiusmod tempor]\
+  .each do |username|
+    User.create!(
+      name: username.capitalize,
+      email: "#{username}@mail.org",
+      password: '12345',
+      level: 0
+    )
+  end
+
+user_ids = User.ids
 
 category = Category.create!(title: 'Веб-дизайн')
-test = category.tests.create!(title: 'HTML')
+test = category.tests.create!(title: 'HTML', author: User.find(user_ids.sample))
 question = test.questions.create!(body: 'Что такое тэг?')
 question.answers.create!(body: 'команда')
 question.answers.create!(body: 'элемент', correct: true)
@@ -19,7 +30,11 @@ question.answers.create!(body: '<i>')
 
 category = Category.create!(title: 'Веб-программирование')
 %w[Ruby Rails JavaScript Java PHP Python].each do |l|
-  test = category.tests.create!(title: l, level: rand(0..3))
+  test = category.tests.create!(
+    title: l,
+    level: rand(0..3),
+    author: User.find(user_ids.sample)
+  )
   rand(6..10).times do |q|
     question = test.questions.create!(body: "Вопрос #{l} #{q}?")
     rand(2..5).times do |a|
@@ -30,7 +45,11 @@ end
 
 category = Category.create!(title: 'Программирование')
 %w[C++ Ada Fortran Perl Assembler Pascal Delphi COBOL].each do |l|
-  test = category.tests.create!(title: l, level: rand(0..3))
+  test = category.tests.create!(
+    title: l,
+    level: rand(0..3),
+    author: User.find(user_ids.sample)
+  )
   rand(6..10).times do |q|
     question = test.questions.create!(body: "Вопрос #{l} #{q}?")
     rand(2..5).times do |a|
@@ -39,24 +58,14 @@ category = Category.create!(title: 'Программирование')
   end
 end
 
-%w[lorem ipsum dolor sit amet consectetur adipiscing elit sed eiusmod tempor]\
-  .each do |username|
-    User.create!(
-      name: username.capitalize,
-      email: "#{username}@mail.org",
-      password: '12345',
-      level: 0
-    )
-  end
-
 User.find_each do |user|
   rand(10).times do
-    test = Test.where('level<=?', user.level).sample
-    tu = TestsUser
-         .find_or_create_by(test_id: test.id, user_id: user.id) do |tests_user|
-           tests_user.passed = [true, false].sample
-         end
-    user.level += 1 if tu.passed
-    user.save
+    test = Test.all.sample
+    TestsUser.find_or_create_by(
+      test_id: test.id,
+      user_id: user.id
+    ) do |tests_user|
+      tests_user.passed = [true, false].sample
+    end
   end
 end
