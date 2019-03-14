@@ -1,7 +1,9 @@
 class User < ApplicationRecord
-  def tests(test_level)
-    Test.joins('INNER JOIN tests_users ON tests_users.test_id = tests.id')
-        .where('tests_users.user_id = ? AND level=?', id, test_level)
-        .distinct
+  has_many :tests_users
+  has_many :tests, through: :tests_users
+  has_many :categories_users
+  has_many :categories, through: :categories_users
+  def tests_by_level(test_level)
+    tests.where(level: test_level)
   end
 end

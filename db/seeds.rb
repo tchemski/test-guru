@@ -52,11 +52,10 @@ end
 User.find_each do |user|
   rand(10).times do
     test = Test.where('level<=?', user.level).sample
-    tu = TestsUser.create!(
-      test_id: test.id,
-      user_id: user.id,
-      passed: [true, false].sample
-    )
+    tu = TestsUser
+         .find_or_create_by(test_id: test.id, user_id: user.id) do |tests_user|
+           tests_user.passed = [true, false].sample
+         end
     user.level += 1 if tu.passed
     user.save
   end
