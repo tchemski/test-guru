@@ -11,9 +11,8 @@ class Answer < ApplicationRecord
   private
 
   def validate_max_number_answers
-    return false unless question.answers.count >= MAX_NUMBER_ANSWERS
+    return false if question.answers.count < MAX_NUMBER_ANSWERS
 
-    errors.add(:question_id,
-               "has maximum #{MAX_NUMBER_ANSWERS} answers.")
+    errors.add(:question_id, "too much anwers, #{MAX_NUMBER_ANSWERS} maximum")
   end
 end
