@@ -9,7 +9,6 @@ class Test < ApplicationRecord
   scope :easy, -> { with_difficulty(0..1) }
   scope :normal, -> { with_difficulty(2..4) }
   scope :hard, -> { with_difficulty(5..Float::INFINITY) }
-
   scope :titles_by_category_title,
         lambda { |category_title|
           # вызов .unscope(:order) не нужен, потому что .order(title: :desc)
@@ -19,4 +18,5 @@ class Test < ApplicationRecord
             .order(title: :desc)
             .pluck(:title)
         }
+  validates :title, presence: true
 end

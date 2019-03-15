@@ -3,4 +3,6 @@ class Answer < ApplicationRecord
 
   # Question.take.answers.with_true_correctness
   scope :with_true_correctness, -> { where(correct: true) }
+
+  validates :body, presence: true
 end
