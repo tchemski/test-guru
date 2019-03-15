@@ -10,10 +10,13 @@ class Test < ApplicationRecord
   scope :normal, -> { with_difficulty(2..4) }
   scope :hard, -> { with_difficulty(5..Float::INFINITY) }
 
-  def self.titles_by_category_title(category_title)
-    joins(:category)
-      .where('categories.title = ?', category_title)
-      .order(title: :desc)
-      .pluck(:title)
-  end
+  scope :titles_by_category_title,
+        lambda { |category_title|
+          # вызов .unscope(:order) не нужен, потому что .order(title: :desc)
+          # перекрывает дефолтный порядок
+          joins(:category)
+            .where('categories.title = ?', category_title)
+            .order(title: :desc)
+            .pluck(:title)
+        }
 end
