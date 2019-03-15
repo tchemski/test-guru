@@ -37,7 +37,7 @@ category = Category.create!(title: 'Веб-программирование')
   )
   rand(6..10).times do |q|
     question = test.questions.create!(body: "Вопрос #{l} #{q}?")
-    rand(2..5).times do |a|
+    rand(2..Answer::MAX_NUMBER_ANSWERS).times do |a|
       question.answers.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
     end
   end
@@ -52,7 +52,7 @@ category = Category.create!(title: 'Программирование')
   )
   rand(6..10).times do |q|
     question = test.questions.create!(body: "Вопрос #{l} #{q}?")
-    rand(2..5).times do |a|
+    rand(2..Answer::MAX_NUMBER_ANSWERS).times do |a|
       question.answers.create!(body: "ответ #{a} #{l} #{q}", correct: a == 2)
     end
   end

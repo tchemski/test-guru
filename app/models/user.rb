@@ -7,4 +7,5 @@ class User < ApplicationRecord
   end
 
   validates :name, :email, :password, presence: true
+  validates :email, uniqueness: true
 end

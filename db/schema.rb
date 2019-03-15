@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2019_03_14_082005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_tests_on_category_id"
+    t.index ["title", "level"], name: "index_tests_title_and_level", unique: true
     t.index ["user_id"], name: "index_tests_on_user_id"
   end
 

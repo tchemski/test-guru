@@ -18,5 +18,14 @@ class Test < ApplicationRecord
             .order(title: :desc)
             .pluck(:title)
         }
+
   validates :title, presence: true
+  validates :level, numericality: { only_integer: true,
+                                    greater_than_or_equal_to: 0 }
+
+  # Может существовать только один Тест с данным названием и уровнем
+  # я бы ещё и категорию добавил, выглядит логичным существование тестов
+  # с одинаковыми названиями и уровнями, но в разных категориях.
+  validates :title, uniqueness: { scope: :level,
+                                  message: 'should happen uniq per level' }
 end
