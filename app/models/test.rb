@@ -9,19 +9,21 @@ class Test < ApplicationRecord
   scope :easy, -> { with_difficulty(0..1) }
   scope :normal, -> { with_difficulty(2..4) }
   scope :hard, -> { with_difficulty(5..Float::INFINITY) }
-  scope :titles_by_category_title,
+  scope :tests_by_category_title,
         lambda { |category_title|
-          # вызов .unscope(:order) не нужен, потому что .order(title: :desc)
-          # перекрывает дефолтный порядок
           joins(:category)
             .where('categories.title = ?', category_title)
-            .order(title: :desc)
-            .pluck(:title)
         }
 
   validates :title, presence: true
   validates :level, numericality: { only_integer: true,
                                     greater_than_or_equal_to: 0 }
+
+  def self.titles_by_category_title(category_title)
+    tests_by_category_title(category_title)
+      .order(title: :desc)
+      .pluck(:title)
+  end
 
   # Может существовать только один Тест с данным названием и уровнем
   # я бы ещё и категорию добавил, выглядит логичным существование тестов
