@@ -1,0 +1,4 @@
+<h1>Tests list</h1>
+<% @tests.each do |test| %>
+<p><%= link_to test.title, test_path(test) %></p>
+<% end %>

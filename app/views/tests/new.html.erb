@@ -1,0 +1,7 @@
+<h1>Create new test</h1>
+
+<%= form_for Test.new, url: { action: "create" } do |f| %>
+  <p>Название теста: <%= f.text_field :title %> </p>
+  <p>Уровень: <%= f.text_field :level %> </p>
+  <%= submit_tag 'Create' %>
+<% end %>
