@@ -9,7 +9,7 @@ class Test < ApplicationRecord
   scope :easy, -> { with_difficulty(0..1) }
   scope :normal, -> { with_difficulty(2..4) }
   scope :hard, -> { with_difficulty(5..Float::INFINITY) }
-  scope :tests_by_category_title,
+  scope :by_category_title,
         lambda { |category_title|
           joins(:category)
             .where('categories.title = ?', category_title)
@@ -20,7 +20,7 @@ class Test < ApplicationRecord
                                     greater_than_or_equal_to: 0 }
 
   def self.titles_by_category_title(category_title)
-    tests_by_category_title(category_title)
+    by_category_title(category_title)
       .order(title: :desc)
       .pluck(:title)
   end
