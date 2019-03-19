@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
-  before_action :find_question, only: %i[show update destroy edit]
+  before_action :find_question, only: %i[show destroy]
   before_action :find_test
-  before_action :user_auth, only: %i[create new edit destroy]
+  before_action :user_auth, only: %i[create new destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
 
   def index
@@ -9,20 +9,19 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create!(create_params)
+    @question = @test.questions.new(create_params)
+    if @question.save
+      redirect_to question_path(@question)
+    else
+      render plain: "Question Not Create", status: :bad_request
+    end
   end
 
   def new
-    @question = Question.new
-  end
-
-  def edit
+    @question = @test.questions.new
   end
 
   def show
-  end
-
-  def update
   end
 
   def destroy
@@ -33,7 +32,11 @@ class QuestionsController < ApplicationController
 
   def create_params
     params.require(:question).permit(:body)
-          .merge!(params.permit(:test_id))
+  end
+
+
+  def find_test
+    @test = Test.find(params[:test_id])
   end
 
   def find_question

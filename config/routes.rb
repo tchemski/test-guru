@@ -4,10 +4,7 @@ Rails.application.routes.draw do
 
   resources :tests, param: :test_id do
 
-    get :beginner, on: :collection
-
     member do
-      post :start
       resources :questions, shallow: true, param: :question_id
     end
   end
