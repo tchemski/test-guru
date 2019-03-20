@@ -1,0 +1,10 @@
+h1 Tests list
+
+table
+  tr
+    th Title
+    th Level
+  - @tests.each do |test|
+    tr
+      td= link_to(test.title, test_path(test))
+      td= test.level
