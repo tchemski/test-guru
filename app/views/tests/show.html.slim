@@ -1,4 +1,8 @@
-h1= @test.title
-h2 Questions
-- @test.questions.each do |question|
-    p= link_to question.body, question_path(question)
+p
+  strong Title: #{@test.title}
+p
+  strong Level: #{@test.level}
+
+= link_to 'Edit', edit_test_path(@test)
+|  | 
+= link_to 'Back', tests_path

@@ -1,0 +1,13 @@
+tr
+  td= link_to(test.title, test_path(test))
+  td= test.level
+  td= link_to 'Show', test_path(test)
+  - if @user == test.author
+      td= link_to 'Edit', edit_test_path(test)
+      td= link_to 'Delete',\
+          test_path(test),\
+          method: :delete,\
+          data: { confirm: 'Are you sure?' }
+  - else
+      td
+      td

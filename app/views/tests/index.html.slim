@@ -1,10 +1,8 @@
 h1 Tests list
-
+p= link_to 'New_test', new_test_path
 table
   tr
     th Title
     th Level
-  - @tests.each do |test|
-    tr
-      td= link_to(test.title, test_path(test))
-      td= test.level
+    th colspan="3" Actions
+  = render @tests
