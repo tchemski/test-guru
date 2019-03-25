@@ -2,6 +2,7 @@ class TestsController < ApplicationController
   before_action :user_auth, only: %i[index create new edit update destroy]
   before_action :find_test, only: %i[show]
   before_action :find_own_test, only: %i[edit update destroy]
+  before_action :find_questions, only: %i[edit show]
   def index
     @tests = Test.all
   end
@@ -44,6 +45,10 @@ class TestsController < ApplicationController
 
   def find_own_test
     @test = @user.own_tests.find(params[:test_id])
+  end
+
+  def find_questions
+    @questions = @test.questions
   end
 
   def test_params

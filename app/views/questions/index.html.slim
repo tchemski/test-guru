@@ -1,5 +1,2 @@
-h1
-  = @test.title
-  | questions
-- @questions.each do |question|
-  p= link_to question.body, question_path(question)
+h1 #{@test.title} questions
+=render 'questions_table'

@@ -1,6 +1,2 @@
-h1= @test.title
-h2 New question
-= form_for @question, url: { action: "create" } do |f|
-  p
-    | Question body: #{f.text_field :body}
-  = submit_tag 'Create'
+=render 'question_header'
+=render 'form'

@@ -1,4 +1,3 @@
 h1= @test.title
 h2= @question.body
-- @question.answers.each do |question|
-  p= question.body
+= render @question.answers
