@@ -1,0 +1,8 @@
+p
+  strong Title: #{@test.title}
+p
+  strong Level: #{level @test}
+= render 'questions/questions_table'
+= link_to 'Back', tests_path
+| |
+= link_to 'Edit', edit_test_path(@test)

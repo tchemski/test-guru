@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: %i[show destroy]
   before_action :find_test
   before_action :user_auth, only: %i[create new destroy]
+  before_action :find_answers, only:%i[show]
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
 
   def index
@@ -13,7 +14,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to question_path(@question)
     else
-      render plain: "Question Not Create", status: :bad_request
+      render plain: 'Question Not Create', status: :bad_request
     end
   end
 
@@ -21,11 +22,11 @@ class QuestionsController < ApplicationController
     @question = @test.questions.new
   end
 
-  def show
-  end
+  def show; end
 
   def destroy
     @question.destroy
+    redirect_to @test
   end
 
   private
@@ -33,7 +34,6 @@ class QuestionsController < ApplicationController
   def create_params
     params.require(:question).permit(:body)
   end
-
 
   def find_test
     @test = Test.find(params[:test_id])
@@ -45,6 +45,10 @@ class QuestionsController < ApplicationController
   end
 
   def rescue_with_question_not_found
-    render plain: "Question Not Found", status: :not_found
+    render plain: 'Question Not Found', status: :not_found
+  end
+
+  def find_answers
+    @answers = @question.answers
   end
 end
