@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   root to: 'tests#index'
 
   resources :tests, param: :test_id do
-
     member do
-      resources :questions, shallow: true, param: :question_id
+      resources :questions, shallow: true, param: :question_id, except: :index do
+        member do
+          resources :answers, shallow: true, param: :answer_id
+        end
+      end
     end
   end
 end

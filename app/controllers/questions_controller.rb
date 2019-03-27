@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :find_question, only: %i[show destroy]
-  before_action :find_test
+  before_action :find_test, only: %i[create new]
   before_action :user_auth, only: %i[create new destroy]
-  before_action :find_answers, only:%i[show]
+  before_action :find_answers, only: %i[show]
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
 
   def index
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
 
   def find_question
     @question = Question.find(params[:question_id])
-    params[:test_id] = @question.test_id
+    @test = @question.test
   end
 
   def rescue_with_question_not_found
