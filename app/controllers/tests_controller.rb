@@ -4,7 +4,7 @@ class TestsController < ApplicationController
   before_action :find_own_test, only: %i[edit update destroy]
   before_action :find_questions, only: %i[edit show]
   def index
-    @tests = Test.all
+    @tests = Test.with_questions_count
   end
 
   def create

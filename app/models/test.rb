@@ -14,6 +14,12 @@ class Test < ApplicationRecord
           joins(:category)
             .where('categories.title = ?', category_title)
         }
+  scope :with_questions_count,
+        lambda {
+          select('tests.*, count(questions.test_id) AS questions_count')
+            .left_outer_joins(:questions)
+            .group(:id)
+        }
 
   validates :title, presence: true
   validates :level, numericality: { only_integer: true,
