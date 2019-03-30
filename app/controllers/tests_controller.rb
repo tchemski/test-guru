@@ -1,6 +1,6 @@
 class TestsController < ApplicationController
-  before_action :user_auth, only: %i[index create new edit update destroy]
-  before_action :find_test, only: %i[show]
+  before_action :user_auth, only: %i[index create new edit update destroy start]
+  before_action :find_test, only: %i[show start]
   before_action :find_own_test, only: %i[edit update destroy]
   before_action :find_questions, only: %i[edit show]
   def index
@@ -36,6 +36,11 @@ class TestsController < ApplicationController
   end
 
   def show; end
+
+  def start
+    @user.tests << @test
+    redirect_to @user.tests_passage(@test)
+  end
 
   private
 

@@ -5,10 +5,6 @@ class QuestionsController < ApplicationController
   before_action :find_answers, only: %i[show]
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
 
-  def index
-    @questions = @test.questions
-  end
-
   def create
     @question = @test.questions.new(create_params)
     if @question.save

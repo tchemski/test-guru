@@ -1,0 +1,10 @@
+h1 Passing the #{@tests_passage.test.title} Test
+
+b= @tests_passage.current_question.body
+
+=form_with url: tests_passage_path(@tests_passage), local: true, method: :put do |f|
+  = f.collection_check_boxes :answer_ids, @tests_passage.current_question.answers, :id, :body, include_hidden: false do |b|
+    p
+      = b.check_box id: "answer_ids_#{b.object.id}"
+      = b.label
+  p= f.submit 'Next'
