@@ -1,4 +1,6 @@
 class Test < ApplicationRecord
+  ACCEPTABLE_PERCENTAGE = 85
+
   belongs_to :category
   has_many :questions, dependent: :destroy
   has_many :tests_passages
@@ -24,16 +26,12 @@ class Test < ApplicationRecord
   validates :title, presence: true
   validates :level, numericality: { only_integer: true,
                                     greater_than_or_equal_to: 0 }
+  validates :title, uniqueness: { scope: :level,
+                                  message: 'should happen uniq per level' }
 
   def self.titles_by_category_title(category_title)
     by_category_title(category_title)
       .order(title: :desc)
       .pluck(:title)
   end
-
-  # Может существовать только один Тест с данным названием и уровнем
-  # я бы ещё и категорию добавил, выглядит логичным существование тестов
-  # с одинаковыми названиями и уровнями, но в разных категориях.
-  validates :title, uniqueness: { scope: :level,
-                                  message: 'should happen uniq per level' }
 end
