@@ -9,7 +9,7 @@ class TestsPassagesController < ApplicationController
   def update
     @tests_passage.accept!(answer_ids)
 
-    if @tests_passage.complited?
+    if @tests_passage.completed?
       redirect_to result_tests_passage_path(@tests_passage)
     else
       render :show
@@ -23,8 +23,6 @@ class TestsPassagesController < ApplicationController
   end
 
   def answer_ids
-    return params[:answer_ids].map(&:to_i) if params[:answer_ids]
-
-    []
+    params[:answer_ids] ? params[:answer_ids].map(&:to_i) : []
   end
 end

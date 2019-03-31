@@ -15,13 +15,20 @@ class TestsPassage < ApplicationRecord
     save!
   end
 
-  def complited?
+  def completed?
     current_question.nil?
   end
 
   def num
-    init_num unless @num
-    @num
+    @num ||= init_num
+  end
+
+  def percentage
+    (correct_questions.to_f / num[:questions]) * 100
+  end
+
+  def passed?
+    percentage >= Test::ACCEPTABLE_PERCENTAGE
   end
 
   private
@@ -32,20 +39,20 @@ class TestsPassage < ApplicationRecord
 
   def before_validation_set_next_question
     self.current_question =
-      test.questions.order(:id).where('id > ?', current_question.id).first
+      test.ordered_questions.where('id > ?', current_question.id).first
   end
 
   def init_num
     @num = {}
-    ordered = test.questions.order(:id)
-    @num[:questions] = ordered.count
+    @num[:questions] = test.questions.count
 
-    if !complited?
-      complited = ordered.where('id < ?', current_question.id)
-      @num[:complited_questions] = complited.count
-      @num[:current_question] = @num[:complited_questions] + 1
+    if !completed?
+      @num[:completed_questions] = test.ordered_questions.where('id < ?', current_question.id).count
+      @num[:current_question] = @num[:completed_questions] + 1
     else
-      @num[:complited_questions] = @num[:questions]
+      @num[:completed_questions] = @num[:questions]
     end
+
+    @num
   end
 end

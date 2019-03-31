@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :find_question, only: %i[show destroy]
+  before_action :find_question_and_set_test, only: %i[show destroy]
   before_action :find_test, only: %i[create new]
   before_action :user_auth, only: %i[create new destroy]
   before_action :find_answers, only: %i[show]
@@ -35,7 +35,7 @@ class QuestionsController < ApplicationController
     @test = Test.find(params[:test_id])
   end
 
-  def find_question
+  def find_question_and_set_test
     @question = Question.find(params[:question_id])
     @test = @question.test
   end

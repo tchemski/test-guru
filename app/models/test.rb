@@ -34,4 +34,8 @@ class Test < ApplicationRecord
       .order(title: :desc)
       .pluck(:title)
   end
+
+  def ordered_questions
+    questions.order(:id)
+  end
 end
