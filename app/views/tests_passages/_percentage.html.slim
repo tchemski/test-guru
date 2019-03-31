@@ -1,0 +1,4 @@
+- if @tests_passage.passed?
+    div id="test_passed" #{percentage(@tests_passage)} PASSED
+- else
+    div id="test_failed" #{percentage(@tests_passage)} FAILED

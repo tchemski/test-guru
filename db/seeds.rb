@@ -57,15 +57,3 @@ category = Category.create!(title: 'Программирование')
     end
   end
 end
-
-User.find_each do |user|
-  rand(10).times do
-    test = Test.all.sample
-    TestsUser.find_or_create_by(
-      test_id: test.id,
-      user_id: user.id
-    ) do |tests_user|
-      tests_user.passed = [true, false].sample
-    end
-  end
-end

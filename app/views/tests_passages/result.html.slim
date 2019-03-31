@@ -1,0 +1,5 @@
+h1 #{@tests_passage.test.title} Test Result
+
+h2= render 'percentage', tests_passage: @tests_passage
+
+= link_to 'Back', tests_path
