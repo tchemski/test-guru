@@ -46,11 +46,11 @@ class TestsPassage < ApplicationRecord
     @num = {}
     @num[:questions] = test.questions.count
 
-    if !completed?
+    if completed?
+      @num[:completed_questions] = @num[:questions]
+    else
       @num[:completed_questions] = test.ordered_questions.where('id < ?', current_question.id).count
       @num[:current_question] = @num[:completed_questions] + 1
-    else
-      @num[:completed_questions] = @num[:questions]
     end
 
     @num
