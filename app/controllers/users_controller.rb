@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  def new
+  def signup
     @user = User.new
   end
 
@@ -7,9 +7,10 @@ class UsersController < ApplicationController
     @user = User.new(user_param)
 
     if @user.save
-      redirect_to tests_path
+      session[:user_id] = @user.id
+      redirect_to root_path
     else
-      render :new
+      render :signup
     end
   end
 
