@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   resources :tests, param: :test_id do
     member do
       post :start
-      get :start
       resources :questions, shallow: true, param: :question_id, except: :index do
         member do
           resources :answers, shallow: true, param: :answer_id, except: :index
