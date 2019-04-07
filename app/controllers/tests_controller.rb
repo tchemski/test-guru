@@ -1,5 +1,5 @@
 class TestsController < ApplicationController
-  before_action :user_auth, only: %i[index create new edit update destroy start]
+  before_action :user_auth, only: %i[start create new edit update destroy start]
   before_action :find_test, only: %i[show start]
   before_action :find_own_test, only: %i[edit update destroy]
   before_action :find_questions, only: %i[edit show]
