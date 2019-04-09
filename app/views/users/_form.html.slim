@@ -1,20 +1,20 @@
-= form_with model: @user, local: true do |f|
-  = render 'shared/errors_count_msg', resource: @user
+= form_with model: current_user, local: true do |f|
+  = render 'shared/errors_count_msg', resource: current_user
   p
     = f.label :name
     = f.text_field :name, id: :name
-    div= @user.errors.messages[:name].join(', ')
+    div= current_user.errors.messages[:name].join(', ')
   p
     = f.label :email
     = f.text_field :email, id: :email
-    div= @user.errors.messages[:email].join(', ')
+    div= current_user.errors.messages[:email].join(', ')
   p
     = f.label :password
     = f.password_field :password, id: :password
-    div= @user.errors.messages[:password].join(', ')
+    div= current_user.errors.messages[:password].join(', ')
   p
     = f.label :password_confirmation
     = f.password_field :password_confirmation, id: :password_confirmation
-    div= @user.errors.messages[:password_confirmation].join(', ')
+    div= current_user.errors.messages[:password_confirmation].join(', ')
   p
     = f.submit
