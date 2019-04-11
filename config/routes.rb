@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users, path: :gurus, path_names: { sign_in: :login, sign_out: :logout }
 
-  resources :tests, param: :test_id do
+  resources :tests, param: :test_id, only: :index do
     member do
       post :start
       resources :questions, shallow: true, param: :question_id, except: :index do
@@ -18,5 +18,9 @@ Rails.application.routes.draw do
     member do
       get :result
     end
+  end
+
+  namespace :admin do
+    resources :tests, param: :test_id
   end
 end

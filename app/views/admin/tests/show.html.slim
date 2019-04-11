@@ -1,0 +1,8 @@
+p
+  strong Title: #{@test.title}
+p
+  strong Level: #{level @test}
+= render partial: 'questions/questions_table', collection: @test.questions
+= link_to 'Back', admin_tests_path
+= ' | '
+= link_to 'Edit', edit_admin_test_path(@test)

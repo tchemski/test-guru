@@ -1,0 +1,15 @@
+= form_with model: [:admin, @test], local:true do |f|
+  = render 'shared/errors_count_msg', resource: @test
+  p
+    = f.label :title
+    = f.text_field :title
+    div= @test.errors.messages[:title].join(', ')
+  p
+    = f.label :level
+    = f.text_field :level
+    div= @test.errors.messages[:level].join(', ')
+  p
+    = f.label :category_id
+    = f.collection_select :category_id, Category.all, :id, :title, prompt: true
+    div= @test.errors.messages[:category].join(', ')
+  = f.submit
