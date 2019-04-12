@@ -20,6 +20,10 @@ class User < ApplicationRecord
     tests_passages.where(test_id: test.id).order(:id).last
   end
 
+  def admin?
+    self.class == Admin
+  end
+
   private
 
   def before_save_set_name_from_email
