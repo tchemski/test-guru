@@ -1,16 +1,26 @@
-class QuestionsController < ApplicationController
-  before_action :find_question_and_set_test, only: %i[show destroy]
+class Admin::QuestionsController < Admin::BaseController
+  before_action :authenticate_user!
+  before_action :find_question_and_set_test, only: %i[show destroy edit update]
   before_action :find_test, only: %i[create new]
-  before_action :authenticate_user!, only: %i[create new destroy]
   before_action :find_answers, only: %i[show]
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
 
   def create
-    @question = @test.questions.new(create_params)
+    @question = @test.questions.new(question_params)
     if @question.save
-      redirect_to question_path(@question)
+      redirect_to admin_question_path(@question)
     else
       render plain: 'Question Not Create', status: :bad_request
+    end
+  end
+
+  def edit; end
+
+  def update
+    if @question.update(question_params)
+      redirect_to admin_question_path(@question)
+    else
+      render plain: 'Question Not Update', status: :bad_request
     end
   end
 
@@ -27,7 +37,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def create_params
+  def question_params
     params.require(:question).permit(:body)
   end
 

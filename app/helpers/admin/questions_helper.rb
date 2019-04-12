@@ -1,4 +1,4 @@
-module QuestionsHelper
+module Admin::QuestionsHelper
   HEADER_TEXT = {
     new: 'Create New %s Question',
     edit: 'Edit %s Question'

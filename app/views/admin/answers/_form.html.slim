@@ -1,4 +1,4 @@
-= form_with model: @answer, local:true do |f|
+= form_with model: [:admin, @answer], local:true do |f|
   = render 'shared/errors_count_msg', resource: @answer
   p
     = f.label :body

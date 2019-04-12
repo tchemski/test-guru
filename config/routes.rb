@@ -6,11 +6,6 @@ Rails.application.routes.draw do
   resources :tests, param: :test_id, only: :index do
     member do
       post :start
-      resources :questions, shallow: true, param: :question_id, except: :index do
-        member do
-          resources :answers, shallow: true, param: :answer_id, except: :index
-        end
-      end
     end
   end
 
@@ -21,6 +16,15 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :tests, param: :test_id
+    root to: 'tests#index'
+    resources :tests, param: :test_id do
+      member do
+        resources :questions, shallow: true, param: :question_id, except: :index do
+          member do
+            resources :answers, shallow: true, param: :answer_id, except: :index
+          end
+        end
+      end
+    end
   end
 end
