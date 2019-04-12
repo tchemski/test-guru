@@ -1,0 +1,8 @@
+h1 Edit #{@test.title}
+
+= render 'form'
+
+h2 Questions
+p= link_to 'Add question', new_admin_question_path
+= render 'admin/questions/questions_table'
+p= link_to 'Back', admin_tests_path

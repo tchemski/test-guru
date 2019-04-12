@@ -1,8 +1,15 @@
 class User < ApplicationRecord
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :validatable,
+         :confirmable,
+         :trackable
+
   has_many :tests_passages
   has_many :tests, through: :tests_passages
   has_many :own_tests, class_name: 'Test', inverse_of: 'author'
-  has_secure_password
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is incorrect" }
   validates :email, uniqueness: true
@@ -11,6 +18,10 @@ class User < ApplicationRecord
 
   def tests_passage(test)
     tests_passages.where(test_id: test.id).order(:id).last
+  end
+
+  def admin?
+    self.class == Admin
   end
 
   private
