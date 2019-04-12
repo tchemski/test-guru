@@ -1,5 +1,5 @@
 class Admin::TestsController < Admin::BaseController
-  before_action :find_test, only: %i[show start edit update destroy]
+  before_action :find_test, only: %i[show edit update destroy]
   before_action :find_questions, only: %i[edit show]
   def index
     @tests = Test.with_questions_count
@@ -34,11 +34,6 @@ class Admin::TestsController < Admin::BaseController
   end
 
   def show; end
-
-  def start
-    current_user.tests << @test
-    redirect_to current_user.tests_passage(@test)
-  end
 
   private
 
